@@ -24,7 +24,7 @@ class Exam(models.Model):
 
 class AudioFile(models.Model):
     exam = models.ForeignKey(Exam, related_name='audio_files', on_delete=models.CASCADE)
-    audio_file = models.FileField(upload_to='audio_files/')
+    audio_file = models.FileField(upload_to='')
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):

@@ -1,8 +1,23 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block content %}
 <h1>{{ exam.title }}</h1>
 <form method="post">
   {% csrf_token %} {% for question in questions %}
   <div>
+    {% if exam.audio_files.all %}
+    <h3>Audio Files:</h3>
+    {% for audio_file in exam.audio_files.all %}
+    <div>
+      <audio controls>
+        <source
+          src="http://{{ request.get_host }}/group1{{audio_file.audio_file.url}}"
+          type="audio/mpeg"
+        />
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    {% endfor %}
+    <hr />
+    {% endif %}
     <p>{{ question.question_text }}</p>
     {% if question.question_type == 'MC' %} {% for option in question.options %}
     <input

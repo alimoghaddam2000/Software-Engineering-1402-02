@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Exam, StudentExamRecord, Category
+from .models import Exam, StudentExamRecord, Category,AudioFile
+from django.conf import settings
 
 @login_required
 def exam_list(request):
@@ -55,6 +56,7 @@ def take_exam(request, exam_id):
         return redirect('exam_result', exam_id=exam.id)
 
     context = {
+        'MEDIA_URL': settings.MEDIA_URL,
         'exam': exam,
         'questions': questions,
     }
