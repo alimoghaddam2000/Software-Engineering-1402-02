@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block content %}
+<h1>{{ exam.title }}</h1>
+<form method="post">
+  {% csrf_token %} {% for question in questions %}
+  <div>
+    <p>{{ question.question_text }}</p>
+    {% if question.question_type == 'MC' %} {% for option in question.options %}
+    <input
+      type="radio"
+      name="question_{{ question.id }}"
+      value="{{ forloop.counter0 }}"
+      required
+    />
+    {{ option }}<br />
+    {% endfor %} {% elif question.question_type == 'TX' %}
+    <textarea name="question_{{ question.id }}" required></textarea>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}

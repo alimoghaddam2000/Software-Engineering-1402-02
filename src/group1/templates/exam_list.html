@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Exams</h1>
+  <form method="get">
+    <select name="difficulty">
+      <option value="">All Difficulties</option>
+      <option value="Easy" {% if difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+      <option value="Medium" {% if difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+      <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+    </select>
+    <select name="category">
+      <option value="">All Categories</option>
+      {% for category in categories %}
+        <option value="{{ category.id }}" {% if category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+      {% endfor %}
+    </select>
+    <select name="taken">
+      <option value="">All</option>
+      <option value="yes" {% if taken == 'yes' %}selected{% endif %}>Taken</option>
+      <option value="no" {% if taken == 'no' %}selected{% endif %}>Not Taken</option>
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <ul>
+    {% for exam in exams %}
+      <li>
+        <a href="{% url 'take_exam' exam.id %}">{{ exam.title }}</a> - {{ exam.difficulty }} - {{ exam.category.name }}
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

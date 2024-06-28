@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% load indexFilter %} {% block content %}
+<h1>{{ exam.title }} - Results</h1>
+<p>Your Grade: {{ grade }}%</p>
+<ul>
+  {% for record in student_records %}
+  <li>
+    <strong>Question:</strong> {{ record.question.question_text }}<br />
+    <strong>Your Answer:</strong>
+    {{ record.question.options|index:record.answer }}<br />
+    <strong>Correct Answer:</strong>
+    {{ record.question.options|index:record.question.correct_answer }}
+  </li>
+  {% endfor %}
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" name="retake_exam" class="btn btn-secondary">
+      Retake Exam
+    </button>
+  </form>
+</ul>
+{% endblock %}
