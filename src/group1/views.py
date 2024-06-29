@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Exam, StudentExamRecord, Category,AudioFile
+from .models import Exam, StudentExamRecord, Category
 from django.conf import settings
 
 @login_required
@@ -20,9 +20,9 @@ def exam_list(request):
         exams = exams.filter(category_id=category_id)
     if taken:
         if taken == 'yes':
-            exams = exams.filter(studentexamrecord__student=user)
+            exams = exams.filter(studentexamrecord__student=user).distinct()
         elif taken == 'no':
-            exams = exams.exclude(studentexamrecord__student=user)
+            exams = exams.exclude(studentexamrecord__student=user).distinct()
 
     context = {
         'exams': exams,

@@ -18,7 +18,7 @@
     <select class="select select-bordered w-full max-w-xs mb-5" name="category">
       <option value="">All Categories</option>
       {% for category in categories %}
-        <option value="{{ category.id }}" {% if category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
+        <option value="{{ category.id }}" {% if category_id == category.id|stringformat:"i" %}selected{% endif %}>{{ category.name }}</option>
       {% endfor %}
     </select>
     <select class="select select-bordered w-full max-w-xs mb-5" name="taken">
@@ -27,7 +27,7 @@
       <option value="no" {% if taken == 'no' %}selected{% endif %}>Not Taken</option>
     </select>
           <div class="w-full">
-            <button type="submit" class="btn btn-success w-full">فیلتر</button>
+            <button type="submit" class="btn btn-success w-full">Filter</button>
           </div>
   </form>
         </div>
