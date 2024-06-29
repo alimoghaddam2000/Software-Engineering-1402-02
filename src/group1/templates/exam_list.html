@@ -1,33 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Exams</h1>
+<section class="p-10 flex justify-center items-center">
+      <div
+        class="flex flex-row bg-neutral w-[1280px] max-w-[1280px] p-5 rounded-md"
+      >
+        <div
+          class="w-[15%] mr-5 flex sticky flex-col max-md:absolute max-md:z-50 max-md:w-[300px] max-md:bg-gray-700 max-md:top-1/2 max-md:left-1/2 max-md:-translate-x-1/2 max-md:-translate-y-1/2 max-md:p-5 max-md:rounded-md max-md:m-0"
+        >
   <form method="get">
-    <select name="difficulty">
+    <select class="select select-bordered w-full max-w-xs mb-5" name="difficulty">
       <option value="">All Difficulties</option>
       <option value="Easy" {% if difficulty == 'Easy' %}selected{% endif %}>Easy</option>
       <option value="Medium" {% if difficulty == 'Medium' %}selected{% endif %}>Medium</option>
       <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
     </select>
-    <select name="category">
+    <select class="select select-bordered w-full max-w-xs mb-5" name="category">
       <option value="">All Categories</option>
       {% for category in categories %}
         <option value="{{ category.id }}" {% if category_id == category.id %}selected{% endif %}>{{ category.name }}</option>
       {% endfor %}
     </select>
-    <select name="taken">
+    <select class="select select-bordered w-full max-w-xs mb-5" name="taken">
       <option value="">All</option>
       <option value="yes" {% if taken == 'yes' %}selected{% endif %}>Taken</option>
       <option value="no" {% if taken == 'no' %}selected{% endif %}>Not Taken</option>
     </select>
-    <button type="submit">Filter</button>
+          <div class="w-full">
+            <button type="submit" class="btn btn-success w-full">فیلتر</button>
+          </div>
   </form>
+        </div>
+        <div
+          class="flex w-[85%] flex-row gap-5 mb-auto flex-wrap max-md:w-full"
+        >
 
-  <ul>
     {% for exam in exams %}
-      <li>
-        <a href="{% url 'take_exam' exam.id %}">{{ exam.title }}</a> - {{ exam.difficulty }} - {{ exam.category.name }}
-      </li>
+          <div class="card card-compact bg-base-100 w-[250px] shadow-xl">
+            <div class="card-body">
+              <h2 class="card-title">{{ exam.title }}</h2>
+              <div>
+                <span>Difficulty : </span>
+                <span>{{ exam.difficulty }}</span>
+              </div>
+              <div>
+                <span>Category : </span>
+                <span> {{ exam.category.name }}</span>
+              </div>
+
+              <div class="card-actions">
+                <a href="{% url 'take_exam' exam.id %}" class="btn btn-primary w-full">Start</a>
+              </div>
+            </div>
+          </div>
     {% endfor %}
-  </ul>
+        </div>
+      </div>
+</section>
 {% endblock %}

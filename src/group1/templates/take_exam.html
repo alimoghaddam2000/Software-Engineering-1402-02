@@ -1,37 +1,59 @@
 {% extends "base.html" %} {% load static %} {% block content %}
-<h1>{{ exam.title }}</h1>
-<form method="post">
-  {% csrf_token %} {% for question in questions %}
-  <div>
-    {% if exam.audio_files.all %}
-    <h3>Audio Files:</h3>
-    {% for audio_file in exam.audio_files.all %}
-    <div>
-      <audio controls>
-        <source
-          src="http://{{ request.get_host }}/group1{{audio_file.audio_file.url}}"
-          type="audio/mpeg"
-        />
-        Your browser does not support the audio element.
-      </audio>
+
+<section class="p-10 flex justify-center items-center">
+  <div
+    class="flex flex-col bg-neutral w-[1280px] max-w-[1280px] p-5 rounded-md"
+  >
+    <div class="w-full flex justify-between pb-5">
+      <span>{{ exam.title }}</span>
     </div>
-    {% endfor %}
-    <hr />
-    {% endif %}
-    <p>{{ question.question_text }}</p>
-    {% if question.question_type == 'MC' %} {% for option in question.options %}
-    <input
-      type="radio"
-      name="question_{{ question.id }}"
-      value="{{ forloop.counter0 }}"
-      required
-    />
-    {{ option }}<br />
-    {% endfor %} {% elif question.question_type == 'TX' %}
-    <textarea name="question_{{ question.id }}" required></textarea>
-    {% endif %}
+    <div class="w-full pb-5">
+      {% if exam.audio_files.all %}
+      <h3>Audio Files:</h3>
+      {% for audio_file in exam.audio_files.all %}
+      <div>
+        <audio controls>
+          <source
+            src="http://{{ request.get_host }}/group1{{audio_file.audio_file.url}}"
+            type="audio/mpeg"
+          />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+      {% endfor %}
+      <hr />
+      {% endif %}
+    </div>
+    <form method="post">
+      {% csrf_token %} {% for question in questions %}
+
+      <div class="flex text-lg pb-1">
+        <p>{{ question.question_text }}</p>
+      </div>
+      {% if question.question_type == 'MC' %} {% for option in question.options%}
+      <input
+        class="radio radio-accent w-4 h-4"
+        type="radio"
+        name="question_{{ question.id }}"
+        value="{{ forloop.counter0 }}"
+        required
+      />
+      <div>{{ option }}</div>
+      <br />
+      {% endfor %} {% elif question.question_type == 'TX' %}
+      <label class="form-control w-full pb-5">
+        <textarea
+          class="input input-bordered w-full"
+          name="question_{{ question.id }}"
+          required
+        ></textarea>
+      </label>
+      {% endif %} {% endfor %}
+      <div class="w-full flex justify-end">
+        <button type="Submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
   </div>
-  {% endfor %}
-  <button type="submit">Submit</button>
-</form>
+</section>
+
 {% endblock %}
