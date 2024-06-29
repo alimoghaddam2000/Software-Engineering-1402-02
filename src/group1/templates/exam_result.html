@@ -15,9 +15,9 @@
       <li class="p-5">
         <strong>Question:</strong> {{ record.question.question_text }}<br />
         <strong>Your Answer:</strong>
-        {% if record.question.question_type == 'MC' %} {{
-        record.question.options|index:record.answer }}<br />
-        {% elif record.question.question_type == 'TX' %} {{ record.answer}} {% endif %}
+        {% if record.question.question_type == 'MC' %} 
+        {{ record.question.options|index:record.answer }}
+        {% elif record.question.question_type == 'TX' %} {{ record.answer}} {% endif %}<br />
         <strong>Correct Answer:</strong>
         {% if record.question.question_type == 'MC' %}
         {{ record.question.options|index:record.question.correct_answer }}

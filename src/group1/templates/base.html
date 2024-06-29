@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {% block extra_head %}{% endblock %}
-    <title>{% block title %}My Exam App{% endblock %}</title>
+    <title>{% block title %}Listening App{% endblock %}</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -15,7 +15,9 @@
   <body>
     <div class="navbar bg-neutral max-h-fit">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl">Exams</a>
+        <a href="{% url 'exam_list' %}" class="btn btn-ghost text-xl"
+          >Listening Exams</a
+        >
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
