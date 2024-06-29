@@ -1,0 +1,42 @@
+{% extends "group10/html_files/base.html" %}
+{% load static %}
+
+{% block title %}
+    Courses Page
+{% endblock %}
+{% block content %}
+
+
+    <!-- Courses Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Courses</h5>
+                <h1>All Courses</h1>
+            </div>
+            <div class="row">
+
+                    {% for course in courses %}
+                              <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <div class="bg-secondary p-4">
+                            <div class="border-bottom">
+                                <a class="h5" href="{% url 'course_page' id=course.id %}">{{ course.name }}</a>
+                            </div>
+                        </div>
+
+                        <img class="img-fluid" src="data:image/jpeg;base64,{{ course.image_data }}" alt="">
+                        <div class="bg-secondary p-4">
+                            <a class="h5" href="{% url 'course_page' id=course.id %}">{{ course.description }}</a>
+                        </div>
+                    </div>
+                </div>
+
+                    {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- Courses End -->
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends 'group10/html_files/base.html' %}
+{% load static %}
+{% block title %}
+    Course Page
+{% endblock %}
+
+{% block content %}
+    <!-- Course Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+    <img class="img-fluid rounded mb-4" src="data:image/jpeg;base64,{{ image_url }}" alt="Course Poster">
+
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <h1 class="mb-4">{{ course.name }}</h1>
+                    <p>{{ course.description }}</p>
+                </div>
+            </div>
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Videos</h5>
+                <h1>Course Videos</h1>
+            </div>
+            <div class="row">
+                {% for video in course_videos %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2 video-container">
+                        <video class="img-fluid" controls>
+                            <source src="data:video/mp4;base64,{{ video.video_file }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="bg-secondary p-4">
+                            <h5>{{ video.title }}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        <div class="container">
+    <h2 class="mt-5">Add New Video</h2>
+    <form action="{% url 'add_video' course.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_video">Video</label>
+            {{ form.video }}
+            {{ form.video.errors }}
+             {{ form.title.label_tag }}
+            {{ form.title }}
+            {{ form.title.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Video</button>
+    </form>
+</div>
+
+
+
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Exams</h5>
+                <h1>Course Exams</h1>
+            </div>
+                <div class="container py-5">
+            <div class="row">
+
+                    {% for exam in exams %}
+                              <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <div class="bg-secondary p-4">
+                            <div class="border-bottom">
+                                <a class="h5" style="color: #b93232" href="{% url 'exam_page' exam_id=exam.exam_id %}">{{ exam.name }}</a>
+                            </div>
+                        </div>
+
+                        <div class="bg-secondary p-4">
+                            <a class="h5" href="{% url 'exam_page' exam_id=exam.exam_id %}">{{ exam.subjects }}</a>
+                        </div>
+                    </div>
+                </div>
+
+                    {% endfor %}
+
+            </div>
+        </div>
+
+            <h2 class="mt-5">Add New Exam</h2>
+            <button onclick="location.href='{% url 'create_exam' course_id=course.id %}'" class="btn btn-primary">Add Exam</button>
+
+        </div>
+    </div>
+    <!-- Course Detail End -->
+{% endblock %}
