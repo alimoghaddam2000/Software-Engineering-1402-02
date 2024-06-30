@@ -1,0 +1,46 @@
+{% extends 'group10/html_files/base.html' %}
+
+{% block title %}
+Add Question
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Add Question</h1>
+
+    <form method="post" action="{% url 'add_question' exam_id=exam_id %}">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.question.label_tag }}
+            {{ form.question }}
+            {{ form.question.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.option1.label_tag }}
+            {{ form.option1 }}
+            {{ form.option1.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.option2.label_tag }}
+            {{ form.option2 }}
+            {{ form.option2.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.option3.label_tag }}
+            {{ form.option3 }}
+            {{ form.option3.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.option4.label_tag }}
+            {{ form.option4 }}
+            {{ form.option4.errors }}
+        </div>
+        <div class="form-group">
+            {{ form.category.label_tag }}
+            {{ form.category }}
+            {{ form.category.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Question</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'group10/html_files/base.html' %}
+{% load static %}
+{% block title %}
+    Create Course
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mt-5">Add New Course</h2>
+    <form action="{% url 'create_course' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_name">Course Name</label>
+            {{ form.name }}
+            {{ form.name.errors }}
+        </div>
+        <div class="form-group">
+            <label for="id_description">Course Description</label>
+            {{ form.description }}
+            {{ form.description.errors }}
+        </div>
+        <div class="form-group">
+            <label for="id_objectives">Course Objectives</label>
+            {{ form.objectives }}
+            {{ form.objectives.errors }}
+        </div>
+        <div class="form-group">
+            <label for="id_image">Course Image</label>
+            {{ form.image }}
+            {{ form.image.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Add Course</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'group10/html_files/base.html' %}
+
+{% block title %}
+    Exam Page
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="bg-secondary p-4">
+            <h1>{{ exam.name }}</h1>
+            <hr></hr>
+            <h3 style="color: cornflowerblue">{{ exam.subjects }}</h3></div>
+        <div class="mt-4">
+            <h4>Questions</h4>
+            <div class="list-group">
+                {% for question in questions %}
+                    <div class="list-group-item">
+                        <h5>{{ question.question_text }}</h5>
+                        <ul>
+                            <li>{{ question.option1 }}</li>
+                            <li>{{ question.option2 }}</li>
+                            <li>{{ question.option3 }}</li>
+                            <li>{{ question.option4 }}</li>
+                        </ul>
+                    <div style="
+                    background-color: #007bff;
+                    color: #fff;
+                     padding: 5px 10px;
+                    border-radius: 4px;
+                    display: inline-block;
+                    margin-top: 10px;">{{ question.category }}
+                    </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a href="{% url 'add_question' exam_id=exam.exam_id %}" class="btn btn-primary mt-4">Add New Question</a>
+        </div>
+    </div>
+{% endblock %}
