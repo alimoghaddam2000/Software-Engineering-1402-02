@@ -7,6 +7,7 @@ class Category(models.Model):
         return self.name
 
 class Exam(models.Model):
+    #define difficalty level
     DIFFICULTY_LEVEL_CHOICES = [
         ('Easy', 'Easy'),
         ('Medium', 'Medium'),
@@ -44,7 +45,7 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text
-
+#saves student exam records 
 class StudentExamRecord(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
