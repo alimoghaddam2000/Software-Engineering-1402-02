@@ -14,6 +14,7 @@ def exam_list(request):
     category_id = request.GET.get('category')
     taken = request.GET.get('taken')
 
+    # Filter exams by category and difficulty and taken
     if difficulty:
         exams = exams.filter(difficulty=difficulty)
     if category_id:
@@ -40,10 +41,12 @@ def take_exam(request, exam_id):
 
     student_exam = StudentExamRecord.objects.filter(student=student, exam=exam).first()
 
+    # if student already taken the exam then redirect into results page
     if student_exam:
         return redirect('exam_result', exam_id=exam.id)
     questions = exam.question_set.all()
 
+    # submit answer of questions
     if request.method == 'POST':
         for question in questions:
             answer = request.POST.get(f'question_{question.id}')
@@ -66,12 +69,15 @@ def take_exam(request, exam_id):
 def exam_result(request, exam_id):
     exam = get_object_or_404(Exam, pk=exam_id)
     student=request.user
+
+    # if User choose to retake the exam then delete the record of the exam and redirect into take_exam page
     if request.method == 'POST':
         if 'retake_exam' in request.POST:
             StudentExamRecord.objects.filter(student=student, exam=exam).delete()
             return redirect('take_exam',exam_id=exam.id)
     student_records = StudentExamRecord.objects.filter(exam=exam, student=request.user)
     questions = exam.question_set.all()
+    # Compute grade for student
     correct_answers = 0
     for record in student_records:
         if record.question.question_type == 'MC' and record.answer == record.question.correct_answer:
